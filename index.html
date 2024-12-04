@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sportyfo - Prototipo</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('imagenes/sport1.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            padding: 1rem;
+            display: block;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
+        /* Estilos para las secciones */
+        .section {
+            display: none;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin: 1rem 0;
+        }
+
+        .button {
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 0.5rem 0;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .list-item {
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        /* Centrado de botones en publicaciones */
+        .post-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Imagen y video */
+        img, video {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sportyfo</h1>
+    <p>Conéctate y comparte tu pasión por el deporte</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a onclick="showSection('inicio')">Inicio</a></li>
+        <li id="perfilTab" style="display: none;"><a onclick="showSection('perfil')">Perfil</a></li>
+        <li id="chatTab" style="display: none;"><a onclick="showSection('chat')">Chat</a></li>
+        <li id="publicacionesTab" style="display: none;"><a onclick="showSection('publicaciones')">Publicaciones</a></li>
+        <li id="comentariosTab" style="display: none;"><a onclick="showSection('comentarios')">Comentarios</a></li>
+        <li id="ajustesTab" style="display: none;"><a onclick="showSection('ajustes')">Ajustes</a></li>
+    </ul>
+</nav>
+
+<main>
+    <section id="inicio" class="section active">
+        <h2>Inicio</h2>
+        <button class="button" onclick="showLoginForm()">Iniciar Sesión</button>
+        <button class="button" onclick="showRegisterForm()">Registro</button>
+
+        <div id="loginForm" class="form-group" style="display: none;">
+            <h3>Iniciar Sesión</h3>
+            <label>Nombre de Usuario</label>
+            <input type="text" id="username" placeholder="Usuario">
+            <label>Contraseña</label>
+            <input type="password" id="password" placeholder="Contraseña">
+            <button class="button" onclick="login()">Entrar</button>
+        </div>
+
+        <div id="registerForm" class="form-group" style="display: none;">
+            <h3>Registro</h3>
+            <label>Nombre de Usuario</label>
+            <input type="text" id="newUsername" placeholder="Usuario">
+            <label>Crear Contraseña</label>
+            <input type="password" id="newPassword" placeholder="Contraseña">
+            <label>Correo Electrónico</label>
+            <input type="email" id="email" placeholder="Correo Electrónico">
+            <button class="button" onclick="register()">Registrar</button>
+        </div>
+        
+        <footer id="footerInicio">
+            <p>&copy; 2024 Sportyfo - Todos los derechos reservados</p>
+        </footer>
+    </section>
+
+    <section id="perfil" class="section">
+        <h2>Perfil Personal</h2>
+        <img src="imagenes/perfil.jpg" alt="Foto de perfil" style="width: 150px; height: 150px; border-radius: 50%;">
+        <p>¡Hola! Soy un apasionado del deporte, siempre en busca de mejorar y compartir mis logros con la comunidad.</p>
+        <button class="button">Editar Perfil</button>
+        <button class="button">Crear Publicación</button>
+    </section>
+
+    <section id="chat" class="section">
+        <h2>Chat</h2>
+        <ul class="list">
+            <li class="list-item">Amigo 1: ¡Hola! ¿Listo para el próximo torneo?</li>
+            <li class="list-item">Amigo 2: Sí, estoy entrenando duro.</li>
+            <li class="list-item">Entrenador: Recuerda practicar tus tiempos de reacción.</li>
+        </ul>
+        <button class="button">Abrir Nuevo Chat</button>
+    </section>
+
+    <section id="publicaciones" class="section">
+        <h2>Publicaciones</h2>
+        <p>Comparte tus logros deportivos con la comunidad.</p>
+        <ul class="list">
+            <li class="list-item">
+                <p>Publicación de Usuario 1: ¡Acabo de ganar mi primera medalla!</p>
+                <img src="imagenes/sport2.jpg" alt="Medalla">
+                <div class="post-buttons">
+                    <button class="button" onclick="like()">👍</button>
+                    <button class="button" onclick="share()">🔄</button>
+                    <button class="button" onclick="showSection('comentarios')">💬</button>
+                </div>
+            </li>
+            <li class="list-item">
+                <p>Publicación de Usuario 2: Mira este video impresionante.</p>
+                <img src="imagenes/video3.gif" alt="GIF animado" style="width: 100%; max-width: 500px;">
+                <div class="post-buttons">
+                    <button class="button" onclick="like()">👍</button>
+                    <button class="button" onclick="share()">🔄</button>
+                    <button class="button" onclick="showSection('comentarios')">💬</button>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <section id="comentarios" class="section">
+        <h2>Comentarios</h2>
+        <ul class="list">
+            <li class="list-item">Usuario 1: ¡Felicidades por la medalla!</li>
+            <li class="list-item">Usuario 2: Ese video está increíble.</li>
+        </ul>
+        <input type="text" placeholder="Escribe un comentario" class="form-group">
+        <button class="button">Enviar</button>
+    </section>
+
+    <section id="ajustes" class="section">
+        <h2>Ajustes</h2>
+        <ul class="list">
+            <li class="list-item">Ajustes de Cuenta</li>
+            <li class="list-item">Notificaciones</li>
+            <li class="list-item">Ajustes de Privacidad</li>
+            <li class="list-item">Ajustes de Seguridad</li>
+            <li class="list-item">Idioma</li>
+        </ul>
+        <button class="button">Guardar Cambios</button>
+    </section>
+</main>
+
+<script>
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+        hideForms();
+
+        if (sectionId === 'inicio') {
+            document.getElementById('footerInicio').style.display = 'block';
+        } else {
+            document.getElementById('footerInicio').style.display = 'none';
+        }
+    }
+
+    function showLoginForm() {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+    }
+
+    function showRegisterForm() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementBy
+ }
+
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        // Aquí puedes agregar lógica para manejar la autenticación
+        alert(`Iniciando sesión como ${username}`);
+        // Mostrar secciones correspondientes después de iniciar sesión
+        document.getElementById('perfilTab').style.display = 'inline';
+        document.getElementById('chatTab').style.display = 'inline';
+        document.getElementById('publicacionesTab').style.display = 'inline';
+        document.getElementById('comentariosTab').style.display = 'inline';
+        document.getElementById('ajustesTab').style.display = 'inline';
+        showSection('perfil');
+    }
+
+    function register() {
+        const newUsername = document.getElementById('newUsername').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const email = document.getElementById('email').value;
+        // Aquí puedes agregar lógica para manejar el registro
+        alert(`Registrando nuevo usuario: ${newUsername}`);
+        // Mostrar secciones correspondientes después del registro
+        document.getElementById('perfilTab').style.display = 'inline';
+        document.getElementById('chatTab').style.display = 'inline';
+        document.getElementById('publicacionesTab').style.display = 'inline';
+        document.getElementById('comentariosTab').style.display = 'inline';
+        document.getElementById('ajustesTab').style.display = 'inline';
+        showSection('perfil');
+    }
+
+    function like() {
+        alert("¡Te gusta esta publicación!");
+    }
+
+    function share() {
+        alert("Publicación compartida.");
+    }
+</script>
+
+</body>
+</html>
